@@ -3,6 +3,7 @@
 const canvas = document.querySelector('canvas')
 const c = canvas.getContext('2d')
 var enemymove
+var pop_up = true
 
 enemymove = true
 
@@ -238,12 +239,20 @@ function animate() {
 		if (dist - enemy.radius - projectile.radius < 1) {
 			enemy.x = canvas.width - 20
 			enemy.y = 25
-			// enemymove = false
-			// setTimeout(() =>{
-			// 	enemymove = false
-			// }, 100)
-			clearInterval(int1)
-			clearInterval(shootint)
+			// clearInterval(int1)
+			// clearInterval(shootint)
+			if (pop_up == true) {
+				window.confirm("Restart or Quit")
+				
+				if (confirm("Restart or Quit")) {
+					player.x = x
+					player.y = y
+					enemy.x = ex 
+					enemy.y = ey 
+				} else {
+					window.close()
+				}
+			}
 		}
 	})
 }
@@ -251,15 +260,30 @@ function animate() {
 
 // Projectiles 'click'
 
-
-addEventListener('click', (click)=> {
+function shoot() {
+	addEventListener('click', (click)=> {
 		const angle = Math.atan2(event.clientY - player.y, event.clientX - player.x)
 		const velocity = {
 			x: Math.cos(angle) * 5,
 			y: Math.sin(angle) * 5
 		}
-		projectiles.push(new Projectile(player.x, player.y, 5, 'white', velocity)
-		)
+		projectiles.push(new Projectile(player.x, player.y, 5, 'white', velocity))
+	})
+}
+
+// function click() { 
+// 	addEventListener('click', (click)=> {
+// 		const angle = Math.atan2(event.clientY - player.y, event.clientX - player.x)
+// 		const velocity = {
+// 			x: Math.cos(angle) * 5,
+// 			y: Math.sin(angle) * 5
+// 		}
+// 		projectiles.push(new Projectile(player.x, player.y, 5, 'white', velocity))
+// 	})
+// }
+
+addEventListener('click', (click) => {
+	shoot()
 })
 
 addEventListener('keydown', (event) => {
